@@ -36,22 +36,26 @@ def getPoints(img):
 
     return points
 
-def getSqure(points, x, y):
+def getSqureNum(points, x, y):
     for i in range(0, 8):
         for j in range(0, 8):
-            if points[i][j][0] < x < points[i][j+1][0] and points[i][j][1] < y < points[i+1][j][1]:
+            if (points[i+1][j][0] < x < points[i][j+1][0]) and (points[i+1][j][1] < y < points[i][j+1][1]):
                 return i, j
 
-img = cv2.imread(r"test/empty.jpg")
-points = getPoints(img)
+def getSqure(points, x, y):
+    i, j = getSqureNum(points, x, y)
+    return f"{chr(ord('a') + j)}{1 + i}"
 
-for i in range(0, 9):
-    for j in range(0, 9):
-        cv2.circle(img, (int(points[i][j][0]), int(points[i][j][1])), radius=5, color=(0, 0, 255), thickness=-1)
-        cv2.putText(img, f"{i}, {j}", (int(points[i][j][0]), int(points[i][j][1])+20), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 255))
-
+# img = cv2.imread(r"test/empty.jpg")
+# points = getPoints(img)
+#
+# for i in range(0, 9):
+#     for j in range(0, 9):
+#         cv2.circle(img, (int(points[i][j][0]), int(points[i][j][1])), radius=5, color=(0, 0, 255), thickness=-1)
+#         cv2.putText(img, f"{i}, {j}", (int(points[i][j][0]), int(points[i][j][1])+20), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 255))
+#
 # cv2.drawChessboardCorners(img, (7, 7), corners, True)
-
-cv2.imwrite("test/output.jpg", img)
-
-print(f"\n{points}")
+#
+# cv2.imwrite("test/output.jpg", img)
+#
+# print(getSqure(points, 775, 710))
